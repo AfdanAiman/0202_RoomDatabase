@@ -1,9 +1,13 @@
 package com.example.praktikum9.viewmodel
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
 class RepositoriSiswa (
     savedStateHandle: SavedStateHandle,
-    private val repositoriSiswa: RepositoriSiswa): ViewModel() {}
+    private val repositoriSiswa: RepositoriSiswa): ViewModel() {
+
+    var uiStateSiswa by mutableStateOf(UIStateSiswa())
+}
 
