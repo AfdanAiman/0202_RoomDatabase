@@ -1,5 +1,6 @@
 package com.example.praktikum9.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -44,6 +45,7 @@ import com.example.praktikum9.viewmodel.PenyediaViewModel
 @Composable
 fun HomeScreen(
     navigateToItemEntry: () -> Unit,
+    onDetailClick: (Int) -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
@@ -73,6 +75,7 @@ fun HomeScreen(
         val homeUiState by viewModel.homeUiState.collectAsState()
         BodyHome(
             itemSiswa = homeUiState.listSiswa,
+            onSiswaClick = onDetailClick,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
@@ -83,6 +86,7 @@ fun HomeScreen(
 @Composable
 fun BodyHome(
     itemSiswa: List<Siswa>,
+    onSiswaClick: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -98,6 +102,7 @@ fun BodyHome(
         } else {
             ListSiswa(
                 itemSiswa = itemSiswa,
+                onSiswaClick = { onSiswaClick(it.id) },
                 modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.padding_small))
             )
         }
@@ -107,6 +112,7 @@ fun BodyHome(
 @Composable
 fun ListSiswa(
     itemSiswa: List<Siswa>,
+    onSiswaClick: (Siswa) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -118,6 +124,7 @@ fun ListSiswa(
                 siswa = person,
                 modifier = Modifier
                     .padding(vertical = dimensionResource(R.dimen.padding_small))
+                    .clickable { onSiswaClick(person) }
             )
         }
     }
